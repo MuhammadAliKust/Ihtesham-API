@@ -6,7 +6,7 @@ import 'package:ihtesham_project/models/register.dart';
 import 'package:ihtesham_project/models/user.dart';
 
 class AuthServices {
-  String baseURL = "";
+  String baseURL = "https://todo-nu-plum-19.vercel.app";
 
   ///Register
   Future<RegisterModel> registerUser(
