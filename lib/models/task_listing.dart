@@ -38,9 +38,9 @@ class TaskListingModel {
 
 class Task {
   final String? id;
-  final Description? description;
+  final String? description;
   final bool? complete;
-  final Owner? owner;
+  final String? owner;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -57,9 +57,9 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
     id: json["_id"],
-    description: descriptionValues.map[json["description"]]!,
+    description: json["description"],
     complete: json["complete"],
-    owner: ownerValues.map[json["owner"]]!,
+    owner: json["owner"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -67,39 +67,11 @@ class Task {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "description": descriptionValues.reverse[description],
+    "description": description,
     "complete": complete,
-    "owner": ownerValues.reverse[owner],
+    "owner": owner,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
   };
-}
-
-enum Description {
-  SECOND_TASK
-}
-
-final descriptionValues = EnumValues({
-  "second task": Description.SECOND_TASK
-});
-
-enum Owner {
-  THE_67_A5_A9_B147_D66_E715766_C967
-}
-
-final ownerValues = EnumValues({
-  "67a5a9b147d66e715766c967": Owner.THE_67_A5_A9_B147_D66_E715766_C967
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

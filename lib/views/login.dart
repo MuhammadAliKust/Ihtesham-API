@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ihtesham_project/provider/token.dart';
 import 'package:ihtesham_project/services/auth.dart';
+import 'package:ihtesham_project/views/create_task.dart';
+import 'package:ihtesham_project/views/get_all_task.dart';
 import 'package:ihtesham_project/views/profile.dart';
 import 'package:ihtesham_project/views/register.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -17,6 +21,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var tokenProvider = Provider.of<TokenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -59,6 +64,7 @@ class _LoginViewState extends State<LoginView> {
                               email: emailController.text,
                               password: pwdController.text)
                           .then((val) async {
+                        tokenProvider.setToken(val.token.toString());
                         await AuthServices()
                             .getProfile(val.token.toString())
                             .then((userData) {
@@ -78,8 +84,7 @@ class _LoginViewState extends State<LoginView> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ProfileView(
-                                                          model: userData)));
+                                                      GetAllTaskView()));
                                         },
                                         child: Text("Okay"))
                                   ],

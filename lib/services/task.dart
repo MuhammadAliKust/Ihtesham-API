@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ihtesham_project/models/task.dart';
 import 'package:http/http.dart' as http;
 import 'package:ihtesham_project/models/task_listing.dart';
 
 class TaskServices {
-  String baseURL = "";
+  String baseURL = "https://todo-nu-plum-19.vercel.app";
 
   ///Create Task
   Future<TaskModel> crateTask(
@@ -30,13 +31,15 @@ class TaskServices {
     try {
       http.Response response = await http.get(Uri.parse('$baseURL/todos/get'),
           headers: {'Authorization': token});
-
+      log(response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
+        log(response.body.toString());
         return TaskListingModel.fromJson(jsonDecode(response.body));
       } else {
         throw response.reasonPhrase.toString();
       }
     } catch (e) {
+
       throw e.toString();
     }
   }

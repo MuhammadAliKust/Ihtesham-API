@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ihtesham_project/provider/token.dart';
 import 'package:ihtesham_project/views/login.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => TokenProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
